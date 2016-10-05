@@ -1,0 +1,176 @@
+/*
+ Student Info: SonavanePriyanka, ID=17080
+ Subject:CS557(C)_HomeworkNO3_Summer_2016
+Author: administrator
+Filename: newcss.css
+Date and Time: Jul 6, 2016 10:22:30 AM
+Project Name: Homework_3
+*/
+/* 
+    Created on : Jul 6, 2016, 10:22:30 AM
+    Author     : administrator
+*/
+*{
+    margin:0px;
+    padding:0px;
+    list-style-type:none;
+}
+header,nav,section,footer{
+    display:block;
+}
+.container{
+      background-color: lightgoldenrodyellow;
+}
+header{
+    width:2100px;
+    margin:2px;
+    padding:2px;
+}
+nav{
+    margin:2px;
+    padding:2px; 
+    text-align: center;
+}
+
+.images {
+    width: 500px;
+    height:1000px;
+    float:left;
+
+}
+ul.tab {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #f1f1f1;
+}
+
+/* Float the list items side by side */
+ul.tab li {float: left;}
+
+/* Style the links inside the list items */
+ul.tab li a {
+    display: inline-block;
+    color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: 0.3s;
+    font-size: 17px;
+    
+}
+
+/* Change background color of links on hover */
+ul.tab li a:hover {background-color: #ddd;}
+
+/* Create an active/current tablink class */
+ul.tab li a:focus, .active {background-color: #ccc;}
+
+/* Style the tab content */
+.tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+    background-color: lightsalmon;
+    margin-right: 39px;
+}
+.tabcontent {
+    -webkit-animation: fadeEffect 1s;
+    animation: fadeEffect 1s; /* Fading effect takes 1 second */
+}
+
+@-webkit-keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+#footer{
+    position:fixed;
+    height:24px;
+    background-color:yellow;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    margin-bottom:0px;
+    text-align: center
+}
+.sections{
+    float:right;
+    width:1110px;
+    height:1700px;
+    padding:2px;
+    margin:1px;
+}
+#canvas {
+    width: 300px;
+    border: 25px solid green;
+    padding: 25px;
+    margin: 25px;
+}
+.panel {
+    height: 220px;
+    width: 100%;
+    margin: 2px;
+    background-color: gainsboro;
+    float: left;
+}
+[data-drop-target] {
+    height: 85px;
+    width: 85px;;
+    margin: 5px;
+    background-color: lightblue;
+    float: left;
+    text-align: center;
+    font-weight: bold;
+    font: 55px arial, sans-serif;
+}
+.drag-enter {
+    border: 2px dashed #000;
+}
+img {
+    width: 75%;
+    height: 50%;
+    
+}
+
+#Register{
+
+    line-height: 2;
+}
+#Login{
+    line-height: 2;
+}
+.button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    
+}
+label {
+float: left;
+width: 5em;
+margin-right: 1em;
+}
+p{
+    text-align: justify;
+    text-justify: inter-word;
+}
+#div1{
+ border: 1px dotted red;
+ padding: 10px;
+ height:120px;
+ width:120px;
+ float:right;
+}

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<!--
+ Student Info: SonavanePriyanka, ID=17080
+ Subject:CS557(C)_HomeworkNO3_Summer_2016
+Author: administrator
+Filename: index1.html
+Date and Time: Jul 5, 2016 9:27:09 AM
+Project Name: Homework_3
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="newcss.css">   
+        <script language="JavaScript">
+         
+ var logArray = [
+                {name : "", startTime: "", endTime:"", letters:"", result:""}
+            ];
+          
+           
+            function logs(){
+                    var logTable = document.getElementById('logTable');
+                    var row1 = logTable.insertRow();
+                    var playerName = row1.insertCell(0);
+                    var startTime = row1.insertCell(1);
+                    var endTime = row1.insertCell(2);
+                    var gameWord = row1.insertCell(3);
+                    var result = row1.insertCell(4);
+                    var player1 = logArray[0];
+                    playerName.innerHTML= player1.name;
+                    startTime.innerHTML= player1.startTime;
+                    endTime.innerHTML= player1.endTime;
+                    gameWord.innerHTML = player1.letters;
+                    result.innerHTML= player1.result;
+                                 
+                    return "";
+                }
+
+            function openMenu(evt, cityName) {
+                document.getElementById('pName').innerHTML = localStorage.getItem('username') ;
+
+                if(logArray.length === 1){
+                    logArray[0].name = localStorage.getItem('username');
+                }else{
+                    var idx = logArray.length + 1;
+                    logArray[idx].name = localStorage.getItem('username');
+                }
+                
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+
+
+            var picPaths = ['image1.jpg ', 'image2.jpg', 'image3.jpg', 'image4.jpg', 'image5.jpg', 'image6.jpg', 'image7.jpg'];
+            var curPic = -1;
+            //preload the images for smooth animation
+            var imgO = new Array();
+            for (i = 0; i < picPaths.length; i++) {
+                imgO[i] = new Image();
+                imgO[i].src = picPaths[i];
+            }
+
+            function swapImage() {
+                curPic = (++curPic > picPaths.length - 1) ? 0 : curPic;
+                imgCont.src = imgO[curPic].src;
+                setTimeout(swapImage, 30000);
+            }
+
+            window.onload = function () {
+                imgCont = document.getElementById('imgBanner');
+                swapImage();
+            };
+
+            function store(theForm) {
+                document.getElementById('welcomeMessage').innerHTML = "";
+                var inputUsername = theForm["username"];
+                var inputPassword = theForm["password"];
+                var inputFirstname = theForm["firstname"];
+                var inputLastname = theForm["lastname"];
+                var inputEmailId = theForm["emailid"];
+                var inputPassword = theForm["password"];
+                localStorage.setItem("username", inputUsername.value);
+                localStorage.setItem("password", inputPassword.value);
+                localStorage.setItem("firstname", inputFirstname.value);
+                localStorage.setItem("lastname", inputLastname.value);
+                localStorage.setItem("emailid", inputEmailId.value);
+                localStorage.setItem("password", inputPassword.value);
+                document.getElementById('welcomeMessage').innerHTML = "Welcome " + localStorage.getItem('username') + "!";
+                return false;
+            }
+
+            function register(theForm) {
+                document.getElementById('welcomeMessage').innerHTML = "";
+                var inputUsername = theForm["username"];
+                var inputFirstname = theForm["firstname"];
+                var inputLastname = theForm["lastname"];
+                var inputEmailId = theForm["emailid"];
+                var inputPassword = theForm["password"];
+                var username = inputUsername.value;
+                var password = inputPassword.value;
+                var firstn = inputFirstname.value;
+                var lastn = inputLastname.value;
+                var emailid = inputEmailId.value;
+                return false;
+            } // end login()
+
+            function login(theForm) {
+                document.getElementById('welcomeMessage').innerHTML = "";
+                var inputUsername = theForm["username"];
+                var inputPassword = theForm["password"];
+                var username = inputUsername.value;
+                var password = inputPassword.value;
+                if ((username === localStorage.getItem('username')) && (password === localStorage.getItem('password'))) {
+                    document.getElementById('welcomeMessage').innerHTML = "Welcome " + username + "!";
+                } else {
+                    document.getElementById('welcomeMessage').innerHTML = "Invalid Log-in!";
+                }
+                return false;
+            } // end login()            
+
+
+
+            function countdown() {
+                startTimer('minutes', 'seconds', 0, 180);
+                startGame();
+            }
+            function endGame(){
+                clearInterval(interval);
+            }
+
+
+            function startTimer(minElement, secElement, minutes, seconds) {
+                // set time for the particular countdown
+                var time = minutes * 60 + seconds;
+                var interval = setInterval(function() {
+                    var minElem = document.getElementById(minElement);
+                    var secElem = document.getElementById(secElement);
+                    // if the time is 0 then end the counter
+                    if (time < 0) {
+
+                        if(logArray.length === 1){
+                            logArray[0].result = "FAIL";
+                            logArray[0].endTime =  new Date();
+                        }else{
+                            var idx = logArray.length + 1;
+                            logArray[idx].result = "FAIL";
+                            logArray[idx].endTime =  new Date();
+                        }
+
+                        alert("Time Up - Game Over");
+                        clearInterval(interval);
+                        return;
+                    }
+                    var minutes = Math.floor( time / 60 );
+                    if (minutes < 10) minutes = "0" + minutes;
+                    var seconds = time % 60;
+                    if (seconds < 10) seconds = "0" + seconds; 
+                    minElem.value = minutes;
+                    secElem.value = seconds;
+                    time--;
+                }, 1000);
+            }
+
+
+                function startGame() {
+                var gameBoard = document.getElementById('gameBoard');
+                var playerBoard = document.getElementById('playerBoard');
+                gameBoard.innerHTML = "";
+                playerBoard.innerHTML = "";
+                var words = ["APPLE", "BEAUTIFUL", "JAVASCRIPT", "ORANGE","RAPTURE","SCRUMBLE","NOXIOUS"];
+                this.item = words[Math.floor(Math.random() * words.length)];
+
+                if(logArray.length === 1){
+                    logArray[0].letters = this.item;
+                    logArray[0].startTime = new Date();
+                }else{
+                    var idx = logArray.length + 1;
+                    logArray[idx].name = localStorage.getItem('username');
+                    logArray[idx].startTime = new Date();
+                }
+                var shuffledArray = shuffledWords(item);
+                for (i = 0; i < shuffledArray.length; i++) {
+                    var iDiv = document.createElement('div1');
+                    iDiv.setAttribute('draggable', true);
+                    iDiv.setAttribute('data-drop-target', true);
+                    iDiv.setAttribute('ondragstart', 'dragWords(event)');
+                    iDiv.id = shuffledArray[i];
+                    iDiv.className = 'panel';
+                    document.getElementById('gameBoard').appendChild(iDiv);
+                    iDiv.innerHTML = shuffledArray[i];
+                    // Now create and append to iDiv
+                    //var innerDiv = document.createElement('div1');
+                }
+            }
+
+            function shuffledWords(item){
+                var j, x, i;
+                var arr = item.split("");
+                for (i = arr.length; i; i--) {
+                    j = Math.floor(Math.random() * i);
+                    x = arr[i - 1];
+                    arr[i - 1] = arr[j];
+                    arr[j] = x;
+                }
+              return arr;
+            }
+
+            function dragWords(ev) {
+                ev.dataTransfer.setData("text", ev.target.innerHTML);
+            }
+
+            function allowWordsDrop(ev) {
+                ev.preventDefault();
+            }
+
+            function dropWordsOnPlayerBoard(ev) {
+                ev.preventDefault();
+                var data = ev.dataTransfer.getData("text");
+                console.log("DATA : "+ data);
+                ev.target.appendChild(document.getElementById(data));
+                ev.dataTransfer.clearData();
+                var playedWords = ev.target;
+                var playerString = "";
+                for (var i = 0; i < playedWords.children.length; i++) {
+                    var letter = playedWords.children[i];
+                    playerString += letter.innerHTML;
+                }
+                if (playerString === this.item) {
+
+                    if(logArray.length === 1){
+                        logArray[0].result = "SUCCESS";
+                        logArray[0].endTime = new Date();
+                    }else{
+                        var idx = logArray.length + 1;
+                        logArray[idx].result = "SUCCESS";
+                        logArray[idx].endTime = new Date();
+                    } 
+                    alert("Player wins");
+                }
+            }
+
+        </script>
+    </head>
+
+    <header>
+
+        <img src="logo.gif" alt="logo" height="8" width="10"/>
+    </header>
+
+    <nav>
+        <ul class="tab">
+            <li><a href="#" class= "tablinks" onclick="openMenu(event, 'Home')">Home</a></li>
+            <li><a href="#" class= "tablinks" onclick="openMenu(event, 'Register')">Register</a></li>
+            <li><a href="#" class= "tablinks" onclick="openMenu(event, 'Games')">Games</a></li>
+            <li><a href="#" class= "tablinks" onclick="openMenu(event, 'Logs')">Logs</a></li>
+            <li><a href="#" class= "tablinks" onclick="openMenu(event, 'Login')">Login</a></li>
+
+        </ul>
+    </nav>
+
+
+    <body class ="container">
+        <div class="images">
+            <img id="imgBanner" src="" alt="" />
+        </div>
+        <aside class="sections">
+            <Div id="Home" class="tabcontent">
+                <p style="color:black;"> GameZone has been around since 2007 and offers games for multiple platforms and publishes 
+                    reviews, previews, news, hints and cheats, and editorials daily. 
+                    They also offer games for download.
+                    Puzzle games focus on logical and conceptual challenges, although 
+                    often the games add time-pressure or other action-elements. 
+                    Although many action games and adventure games involve puzzles 
+                    such as obtaining inaccessible objects, a true puzzle game focuses
+                    on puzzle solving as the primary gameplay activity. Games usually 
+                    involve shapes, colors, or symbols, 
+                    and the player must directly or indirectly manipulate them into a specific pattern.
+
+                    </br></br>Rather than presenting a random collection of puzzles to solve,
+                    puzzle games typically offer a series of related puzzles that are 
+                    a variation on a single theme. This theme could involve pattern recognition, 
+                    logic, or understanding a process. These games usually have a simple set of rules, 
+                    where players manipulate game pieces on a grid, network or other interaction space. 
+                    Players must unravel clues in order to achieve some victory condition, 
+                    which will then allow them to advance to the next level.
+                    Completing each puzzle will usually lead to a more difficult challenge,
+                    although some games avoid exhausting the player by offering easier levels between more difficult ones.
+                    <br><Br>
+                    Word games are generally engaged as a source of entertainment, 
+                    but have been found to serve an educational purpose as well. 
+                    For instance, young children can find enjoyment playing modestly competitive games such as Hangman, 
+                    while naturally developing important language skills like spelling. 
+                    Solving crossword puzzles, which requires familiarity with a larger vocabulary, 
+                    is a pastime that mature adults have long credited with keeping their minds sharp.
+                    <br><br>
+                    The English language version of the game consists of a 4 by 4 matrix of letters from the English alphabet. Players form meaningful English words by dragging a finger across the letters in the required order to score points. Each letter is assigned a certain score depending on its uncommonness in the possible words. Each game lasts two minutes. Wordament takes place round the clock and an internet (WiFi) connection is required to play the game.
+
+                    The game consists of various rounds. In the Speed Round, 
+                    every word has an associated score of 13 points regardless of its length or components. 
+                    In the Either/Or Round, 
+                    a particular tile out of the sixteen is treated as representing either of two different letters. 
+                    The Digram Round contains a tile representing an ordered pair of letters, which is regarded as a single unit. In the Long Word Round, a player is awarded 200 points for finding a long word, usually more than 12 letters in length. In some rounds, a common prefix or suffix occupies a tile. Apart from these, there are various
+                    theme-based rounds in which words relating to a certain theme are awarded with more points.
+                    <br>
+                    Puzzles are often one of several standard sizes. 
+                    For example, many weekday puzzles (such as the American New York 
+                    Times crossword puzzle) are 15×15 squares, while weekend puzzles may be 21×21, 23×23, 
+                    or 25×25. 
+
+
+                    Typically clues appear outside the grid, divided into an Across list and a Down list; the first cell of each entry contains a number referenced by the clue lists. For example, the answer to a clue labeled "17-Down" is entered with the first letter in the cell numbered "17", proceeding down from there. Numbers are almost never repeated; numbered cells are labeled consecutively, usually from left to right across each row, starting with the top row and proceeding downward. Some Japanese crosswords are numbered from top to bottom down each column, starting with the leftmost column and proceeding right.
+                </p>
+            </Div>
+
+            <Div id="Register" class="tabcontent">
+
+                <h2>Register</h2>
+                <p>Please enter your details here</p>
+                <span id="welcomeMessage"></span>
+                <form method="get" action="" onsubmit="return store(this);" id="register">
+                    <label for="email"> User Name   </label>
+                    <input type="text" id="username" placeholder="Select A User Name" required value="" /><br />
+                    <label for="fname"> First Name    </label>
+                    <input type="text" id="firstname" placeholder="Select A First Name" required value="" /><br />
+                    <label for="lname"> Last Name   </label>
+                    <input type="text" id="lastname" placeholder="Select A Last Name" required value="" /><br />
+                    <label for="emailid">Email ID</label>
+                    <input type="text" id="emailid" placeholder="Select A Email ID" required value="" /><br />
+                    <label for="pass"> Password    </label>
+                    <input type="password" id="password" placeholder="Select A Password" required value="" /><br />
+                    <label for="gen">Gender    </label>
+                    <input type="radio" name="gender" value="male" > Male
+                    <input type="radio" name="gender" value="female"> Female<br>
+                    <input class="button" type="submit" value="Register" />
+                </form>
+                <a class="close" href="#close"></a>
+            </div>
+            <div id="Login" class="tabcontent">
+                <h2>Welcome Guest!</h2>
+                <span id="welcomeMessage"></span>
+                <p>Please enter your login and password here</p>
+                <form method="get" action="" onsubmit="return login(this);" id="signon">
+                    <label for="email">User Name </label>
+                    <input type="text" id="username" placeholder="Your Password" required value="" /><br />
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Your Password" required value="" /><br />
+                    <input class="button" type="submit" value="Log In" />
+                </form>
+                <a class="close" href="#close"></a> 
+            </div>
+
+
+            <Div id="Games" class="tabcontent">
+                <p id="demo"></p>
+                <article>
+                    <span id="pName"></span>
+                    <div class="panel" id="gameBoard"></div>
+                    <div class="panel" id="playerBoard" ondrop="dropWordsOnPlayerBoard(event)" ondragover="allowWordsDrop(event)"></div>
+
+                </article>
+                <input class="button"  TYPE="button" value="new Game" onclick="myVar=countdown();" />
+                <input class="button"  TYPE="button" value="quit Game" onclick=clearTimeout(myVar);">
+                <div id="clock">
+                    Time Left:<input id="minutes" type="text" style="width: 24px; border: none;  font-size: 16px; font-weight: bold;"> : <input id="seconds" type="text" style="width: 24px; border: none;  font-size: 16px; font-weight: bold;"> Min
+                </div>
+            </Div>
+              <Div id="Logs"  class="tabcontent" >
+               
+              
+                <h2>Players Activity Page<h2>
+
+                        <table class ="table" border="1" bordercolor="black" align="center" id="logTable">
+
+                            <tr>
+                                <th>Players Name</th>
+                                <th>Start Date and Time</th>
+                                <th>End Date and Time</th>
+                                <th>Game word</th>
+                                <th>Result</th>
+
+                            </tr>
+
+
+
+                        </table>
+                         <input class="button"  TYPE="button" value="Show Logs" onclick= "var tempPlayer =logs()" />
+                        </Div>
+                        </aside>
+                        <footer id="footer">
+                            &copy;Copywrite gamingzoneweb.com
+
+                        </footer>
+                        </body>
+                        </html>
